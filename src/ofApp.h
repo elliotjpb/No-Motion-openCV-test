@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxMaxim.h"
+#include "ofxOsc.h"
 
 class ofApp : public ofBaseApp{
 
@@ -9,7 +10,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-        void choose(int number);
+        void choose(int number, int time);
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -20,6 +21,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+    void OSC(float clockSpeed);
     // Audio output and input methods
     
     void audioOut(float * output, int bufferSize, int nChannels);
@@ -42,6 +44,7 @@ class ofApp : public ofBaseApp{
     double wave;
     
     maxiSample mySample;
+    //maxiTimePitchStretch<grainPlayerWin> *ps;
     
     //TIMER
     
@@ -52,4 +55,8 @@ class ofApp : public ofBaseApp{
     int timer;
     int endTime;
     bool timerEnd;
+    
+    //osc
+    
+    ofxOscSender piClock;
 };

@@ -12,6 +12,7 @@ void ofApp::setup(){
     ofEnableAlphaBlending();
     ofEnableSmoothing();
     mySample.load(ofToDataPath("audio.wav"));
+    
     ofBackground(0,0,0);
     ofSoundStreamSetup(2,2,this, sampleRate, bufferSize, 4);
     value = 1; //default speed value
@@ -22,6 +23,10 @@ void ofApp::setup(){
     
     startTime = ofGetElapsedTimef();
     randVal = 10;
+    
+    //OSC set up
+    
+     //piClock.setup("piclock.local", 13337);
 }
 
 //--------------------------------------------------------------
@@ -29,6 +34,7 @@ void ofApp::update(){
     
     if (timer <= 0){
         endTime = ofRandom(5, 10);
+        //cout << endTime << endl;
     }
     timer = ofGetElapsedTimef() - startTime;
     //cout << timer << endl;
@@ -41,8 +47,8 @@ void ofApp::update(){
     if (timerEnd == true){
         //cout << "end of timer" << endl;
         int val = ofRandom(1, 5);
-        cout << val << endl;
-        choose(val);
+        //cout << val << endl;
+        choose(val, endTime);
         ofResetElapsedTimeCounter();
         timerEnd = false;
     }
@@ -54,8 +60,8 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::choose(int number){
-    
+void ofApp::choose(int number, int time){
+    //cout << time << endl;
         if(number == 1){
         
         cout << "number1" << endl;
@@ -111,6 +117,7 @@ void ofApp::choose(int number){
 void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
     
     for (int i = 0; i < bufferSize; i++){
+        
         wave = mySample.play(value);//play the file with a speed setting.
         output[i*nChannels    ] = wave;
         output[i*nChannels + 1] = wave;
@@ -124,10 +131,21 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
         
     }
 }
+
+//--------------------------------------------------------------
+void ofApp::OSC(float clockSpeed){
+   // cout << clockSpeed << endl;
+    ofxOscMessage m1;
+    m1.setAddress("/speed");
+    m1.addFloatArg(clockSpeed);
+    piClock.sendMessage(m1);
+}
+
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    value = 1.5;
+
     
 }
 
