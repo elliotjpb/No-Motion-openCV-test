@@ -10,7 +10,6 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-        void choose(int number, int time);
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -21,30 +20,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    void OSC(float clockSpeed);
-    // Audio output and input methods
+    void choose(int number, int time);
     
-    void audioOut(float * output, int bufferSize, int nChannels);
-    void audioIn(float * input, int bufferSize, int nChannels);
-    
-    
-    /* stick you maximilian declarations below
-     
-     For information on how maximilian works, take a look at the example code at
-     
-     http://www.maximilian.strangeloop.co.uk
-     
-     under 'Tutorials'.
-     
-     
-     */
-    float value;
-    int        bufferSize; /* buffer size */
-    int        sampleRate;
-    double wave;
-    
-    maxiSample mySample;
-    //maxiTimePitchStretch<grainPlayerWin> *ps;
+    ofSoundPlayer   Sound;
     
     //TIMER
     
@@ -55,8 +33,4 @@ class ofApp : public ofBaseApp{
     int timer;
     int endTime;
     bool timerEnd;
-    
-    //osc
-    
-    ofxOscSender piClock;
 };

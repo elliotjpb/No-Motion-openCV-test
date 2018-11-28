@@ -3,30 +3,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
-    ofSetFrameRate(60);
-    sampleRate    = 44100; /* Sampling Rate */
-    bufferSize    = 512; /* Buffer Size. you have to fill this buffer with sound using the for loop in the audioOut method */
-    ofxMaxiSettings::setup(sampleRate, 2, bufferSize);
-    ofSetVerticalSync(true);
-    ofEnableAlphaBlending();
-    ofEnableSmoothing();
-    mySample.load(ofToDataPath("audio.wav"));
-    
+    Sound.load("audio.wav");
+    Sound.play();
+    Sound.setVolume(0.2);
     ofBackground(0,0,0);
-    ofSoundStreamSetup(2,2,this, sampleRate, bufferSize, 4);
-    value = 1; //default speed value
-    
     //TIMER
-    
     timerEnd = false;
-    
     startTime = ofGetElapsedTimef();
     randVal = 10;
-    
-    //OSC set up
-    
-     //piClock.setup("piclock.local", 13337);
 }
 
 //--------------------------------------------------------------
@@ -62,19 +46,22 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::choose(int number, int time){
     //cout << time << endl;
-        if(number == 1){
-        
+    if(number == 1){
         cout << "number1" << endl;
-            value = 0.2;
+        Sound.setSpeed(0.2);
+        Sound.setVolume(1.0);
     }else if (number == 2){
         cout << "number2" << endl;
-        value = 0.5;
+        Sound.setSpeed(0.5);
+        Sound.setVolume(1.0);
     }else if (number == 3){
         cout << "number3" << endl;
-        value = 1;
+        Sound.setSpeed(1);
+        Sound.setVolume(1.0);
     }else if (number == 4){
         cout << "number4" << endl;
-        value = 1.5;
+        Sound.setSpeed(1.5);
+        Sound.setVolume(1.0);
     }
     
     //need a way to take current tempo value and then make a smooth transition to the next tempo value
@@ -112,36 +99,6 @@ void ofApp::choose(int number, int time){
 
     
 }
-
-//--------------------------------------------------------------
-void ofApp::audioOut(float * output, int bufferSize, int nChannels) {
-    
-    for (int i = 0; i < bufferSize; i++){
-        
-        wave = mySample.play(value);//play the file with a speed setting.
-        output[i*nChannels    ] = wave;
-        output[i*nChannels + 1] = wave;
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::audioIn(float * input, int bufferSize, int nChannels){
-    
-    for(int i = 0; i < bufferSize; i++){
-        
-    }
-}
-
-//--------------------------------------------------------------
-void ofApp::OSC(float clockSpeed){
-   // cout << clockSpeed << endl;
-    ofxOscMessage m1;
-    m1.setAddress("/speed");
-    m1.addFloatArg(clockSpeed);
-    piClock.sendMessage(m1);
-}
-
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
