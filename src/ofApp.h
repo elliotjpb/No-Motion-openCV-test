@@ -20,10 +20,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    void choose(int number, int time);
+    void doorOpen(float motionVal);
     
     ofSoundPlayer   Sound;
     
+    bool doorOpening;
+    //bool loop;
     //TIMER
     
     int startTime;

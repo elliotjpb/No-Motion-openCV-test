@@ -5,37 +5,50 @@
 void ofApp::setup(){
     Sound.load("audio.wav");
     Sound.play();
-    Sound.setVolume(0.2);
+    Sound.setVolume(0.1);
+    Sound.setSpeed(0.1);
     ofBackground(0,0,0);
+    doorOpening = false;
+    //loop = false;
     //TIMER
-    timerEnd = false;
-    startTime = ofGetElapsedTimef();
-    randVal = 10;
+    //timerEnd = false;
+    //startTime = ofGetElapsedTimef();
+    //randVal = 10;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    if (timer <= 0){
-        endTime = ofRandom(5, 10);
-        //cout << endTime << endl;
-    }
-    timer = ofGetElapsedTimef() - startTime;
-    //cout << timer << endl;
+    //doorOpen = true;
     
+    //if (doorOpen == true){
     
-    if (timer >= endTime){
-        timerEnd = true;
+    if (doorOpening == true){
+        doorOpen(0.5);
+        doorOpening = false;
     }
+
     
-    if (timerEnd == true){
-        //cout << "end of timer" << endl;
-        int val = ofRandom(1, 5);
-        //cout << val << endl;
-        choose(val, endTime);
-        ofResetElapsedTimeCounter();
-        timerEnd = false;
-    }
+//    if (timer <= 0){
+//        endTime = ofRandom(5, 10);
+//        //cout << endTime << endl;
+//    }
+//    timer = ofGetElapsedTimef() - startTime;
+//    //cout << timer << endl;
+//
+//
+//    if (timer >= endTime){
+//        timerEnd = true;
+//    }
+//
+//    if (timerEnd == true){
+//        //cout << "end of timer" << endl;
+//        int val = ofRandom(1, 5);
+//        //cout << val << endl;
+//        choose(val, endTime);
+//        ofResetElapsedTimeCounter();
+//        timerEnd = false;
+//    }
 }
 
 //--------------------------------------------------------------
@@ -44,58 +57,41 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::choose(int number, int time){
-    //cout << time << endl;
-    if(number == 1){
-        cout << "number1" << endl;
-        Sound.setSpeed(0.2);
-        Sound.setVolume(1.0);
-    }else if (number == 2){
-        cout << "number2" << endl;
-        Sound.setSpeed(0.5);
-        Sound.setVolume(1.0);
-    }else if (number == 3){
-        cout << "number3" << endl;
-        Sound.setSpeed(1);
-        Sound.setVolume(1.0);
-    }else if (number == 4){
-        cout << "number4" << endl;
-        Sound.setSpeed(1.5);
-        Sound.setVolume(1.0);
+void ofApp::doorOpen(float motionVal){
+
+    //motionVal + 0.1;
+    
+    for(float i = 0.1; i < motionVal+0.1; i = i + 0.1){
+        usleep(100000);//slight delay to gradually increase value.
+        Sound.setVolume(i);
+        Sound.setSpeed(i);
+        cout << i << endl;
     }
     
-    //need a way to take current tempo value and then make a smooth transition to the next tempo value
+    //need to write function to do a door closed routine.
+    //Maybe have doorOpen last an ammount of time then peform close door.
+    //need to add openCV motion.
+    //but also look into door sensor. 
     
     
-    /*
-     My python code that might help
-     
-     WaitTime = 0.05 //control speed
-     
-     while StepCounter < steps:
-     
-     #MicroStepping is true for all.
-     gpio.output(microStepGPIO, True)
-     #turning the gpio on and off tells the easy driver to take one step
-     gpio.output(UpGPIOs, True)
-     gpio.output(DowGPIOs, True)
-     gpio.output(UpGPIOs, False)
-     gpio.output(DowGPIOs, False)
-     
-     if WaitTime > 0.005:
-     if StepCounter < steps/4.5:
-     WaitTime -= 0.001
-     if StepCounter > steps/4.5 and StepCounter < (steps - (steps/4.5)):
-     WaitTime = 0.005
-     
-     if StepCounter > (steps - (steps/4.5)):
-     if WaitTime < 0.05:
-     WaitTime += 0.001
-     
-     print(WaitTime)
-     StepCounter += 1
-     
-     */
+//    //cout << time << endl;
+//    if(number == 1){
+//        cout << "number1" << endl;
+//        Sound.setSpeed(0.2);
+//        Sound.setVolume(1.0);
+//    }else if (number == 2){
+//        cout << "number2" << endl;
+//        Sound.setSpeed(0.5);
+//        Sound.setVolume(1.0);
+//    }else if (number == 3){
+//        cout << "number3" << endl;
+//        Sound.setSpeed(1);
+//        Sound.setVolume(1.0);
+//    }else if (number == 4){
+//        cout << "number4" << endl;
+//        Sound.setSpeed(1.5);
+//        Sound.setVolume(1.0);
+//    }
 
     
 }
@@ -103,7 +99,7 @@ void ofApp::choose(int number, int time){
 void ofApp::keyPressed(int key){
     
 
-    
+    doorOpening = true;
 }
 
 //--------------------------------------------------------------
