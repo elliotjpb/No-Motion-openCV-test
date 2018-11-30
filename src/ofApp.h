@@ -21,6 +21,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     void doorOpen(float motionVal);
+    //void doorClosed(float motionVal);
     
     ofSoundPlayer   Sound;
     
@@ -29,10 +30,13 @@ class ofApp : public ofBaseApp{
     //TIMER
     
     int startTime;
+    int endTime;
+    int timer;
     int currentTime;
     int randVal;
     int globalTime;
-    int timer;
-    int endTime;
+    int tempMotion;
+    
+   // int endTime;
     bool timerEnd;
 };

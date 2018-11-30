@@ -58,18 +58,29 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::doorOpen(float motionVal){
-
+    int startTime = ofGetElapsedTimef();
+    int endTime = motionVal * 10;
+    int timer = ofGetElapsedTimef() - startTime;
+    cout << timer << endl;
     //motionVal + 0.1;
     
     for(float i = 0.1; i < motionVal+0.1; i = i + 0.1){
         usleep(100000);//slight delay to gradually increase value.
         Sound.setVolume(i);
         Sound.setSpeed(i);
-        cout << i << endl;
+        cout << "ramp up : " << i << endl;
     }
     
-    //need to write function to do a door closed routine.
-    //Maybe have doorOpen last an ammount of time then peform close door.
+    sleep(endTime);
+        
+        for(float a = motionVal; a > 0.1; a = a - 0.1){
+        usleep(100000); //delay
+        Sound.setVolume(a);
+        Sound.setSpeed(a);
+         cout << "ramp down : " << a << endl;
+        }
+
+
     //need to add openCV motion.
     //but also look into door sensor. 
     
@@ -95,6 +106,7 @@ void ofApp::doorOpen(float motionVal){
 
     
 }
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
